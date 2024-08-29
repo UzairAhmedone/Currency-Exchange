@@ -1,21 +1,45 @@
-export default function InputBox({ label,amount ,currencyList }) {
+import { useMemo } from "react";
+import { currencies } from "../Common/SupportedCurrencies";
+export default function InputBox({
+  label,
+  currentAmount,
+  setAmountChange,
+  setCurrency,
+  inputStatus,
+}) {
   return (
     <div className="flex w-full justify-between">
       <div className="w-fit">
         <label className="text-gray-300" htmlFor="label">
           {label}
         </label>
-        <span class="input outline-none my-5 block" onKeyUp={(event)=>{amount=event.target.value}} role="textbox" contentEditable>0</span>
-        {/* <input className="block currency-input outline-none my-5" type="Number" onChange={(event)=> amount=event.target.value} defaultValue={Number(amount)} /> */}
+
+        <input
+          type="number"
+          className="input outline-none my-5 block"
+          min={0}
+          value={currentAmount}
+          disabled={inputStatus}
+          onChange={(event) => {
+            setAmountChange(Number(event.target.value));
+          }}
+        />
       </div>
 
       <div className="">
         <label className="text-gray-300" htmlFor="">
           Currency Type
         </label>
-        <select className="block my-5" name="" id="">
-          {currencyList.forEach((currency) => {
-            <option value={currency.value}>{currency.Name}</option>;
+        <select
+          onChange={(event) => {
+            setCurrency(event.target.value);
+          }}
+          className="block my-5"
+          name=""
+          id="">
+          <option value="">Select Currency</option>
+          {currencies.map((currency) => {
+            return <option value={currency.code}>{currency.name}</option>;
           })}
         </select>
       </div>
