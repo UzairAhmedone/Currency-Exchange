@@ -7,6 +7,13 @@ export default function InputBox({
   setCurrency,
   inputStatus,
 }) {
+  let memorizedOptions=useMemo(()=>{
+    return (currencies.map((currency) => {
+      return <option value={currency.code}>{currency.name}</option>;
+    }))
+  })
+
+
   return (
     <div className="flex w-full justify-between">
       <div className="w-fit">
@@ -38,11 +45,10 @@ export default function InputBox({
           name=""
           id="">
           <option value="">Select Currency</option>
-          {currencies.map((currency) => {
-            return <option value={currency.code}>{currency.name}</option>;
-          })}
+          {memorizedOptions}
         </select>
       </div>
     </div>
   );
 }
+

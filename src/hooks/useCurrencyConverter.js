@@ -11,8 +11,6 @@ export default function useCurrencyConverter(currencyRequest) {
   ) {
     return [null, setCurrency];
   }
-  let fromCurrency = currencyRequest?.fromCurrency ?? "";
-  let toCurrency = currencyRequest?.toCurrency ?? "";
   async function setCurrency(currencyRequest) {
     if (currencyRequest != null) {
       let fromAmount = currencyRequest.fromAmount;

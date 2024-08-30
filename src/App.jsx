@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback,useMemo } from "react";
+import { useState, useRef, useCallback, useMemo } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import InputBox from "./Components/CurrencyInputBox";
@@ -30,12 +30,34 @@ function App() {
   //   toAmount = currentAmount;
   // }, []);
 
-  //let fromInput =useRef(null);
+  //let fromInputBox =useRef(null);
   let [fromAmount, setFromAmount] = useState(0);
   let [fromCurrency, setFromCurrency] = useState(0);
   let [toCurrency, setToCurrency] = useState(0);
   let toAmount = currencyInfo?.toAmount ?? 0;
 
+  let fromInputBox = useMemo(() => {
+    return (
+      <InputBox
+        label={"From"}
+        setCurrency={setFromCurrency}
+        setAmountChange={setFromAmount}
+        currentAmount={fromAmount}
+        inputStatus={false}
+      />
+    );
+  }, [fromAmount, fromCurrency]);
+  let toInputBox = useMemo(() => {
+    return (
+      <InputBox
+        label={"To"}
+        setCurrency={setToCurrency}
+        setAmountChange={null}
+        currentAmount={toAmount}
+        inputStatus={true}
+      />
+    );
+  }, [toAmount, toCurrency]);
   return (
     <div className="bg-slate-100 rounded p-6">
       <h1 className="text-5xl text-gray-500 font-medium m-5">
@@ -43,20 +65,8 @@ function App() {
         Currency Calculator
       </h1>
       <div className="wrapper w-full">
-        <InputBox
-          label={"From"}
-          setCurrency={setFromCurrency}
-          setAmountChange={setFromAmount}
-          currentAmount={fromAmount}
-          inputStatus={false}
-        />
-        <InputBox
-          label={"To"}
-          setCurrency={setToCurrency}
-          setAmountChange={null}
-          currentAmount={toAmount}
-          inputStatus={true}
-        />
+        {fromInputBox}
+        {toInputBox}
         <button
           onClick={() =>
             setConversion(
